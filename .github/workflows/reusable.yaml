@@ -1,0 +1,23 @@
+name: Reusable Workflow
+
+on: 
+  workflow_call:
+    inputs:
+      username:
+        required: true
+        type: string
+    outputs:
+      message:
+        description: "The final greeting message"
+        value: ${{jobs.reuse-job.outputs.result}}
+
+jobs:
+  reuse-job:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{steps.greet.outputs.greeting}}
+    steps:
+      - id: greet 
+        run: |
+          echo "greeting=Hello, ${{inputs.username}} >> $GITHUB_OUTPUT"
+          

@@ -1,0 +1,17 @@
+name: Caller Workflow
+
+on: 
+  Workflow_dispatch
+
+jobs:
+  call-reusable:
+    uses: .//github/workflows/reusable.yaml
+    with:
+      username: Ravi
+
+  print-message:
+    needs: call-reusable
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+        echo "Message from reusable: ${{needs.call-reusable.outputs.message}}"
