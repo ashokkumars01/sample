@@ -1,0 +1,45 @@
+name: Conditional Test Job
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build the app 
+        run: echo "Build step always runs"
+
+  check-tests-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      tests_changes: ${{steps.set-output.outputs.tests_changes}}
+    steps:
+      - name: Checkout Code 
+        uses: actions/checkout@v4
+
+      - name: Check for changes in tests/ folder
+        id: set-output
+        run: |
+          echo "Checking for file changes in 'tests/' folder....."
+          git fetch origin ${{ github.event.before }} --depth=1
+          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^tests/'; then
+            echo "tests_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "tests_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+  test:
+    needs: check-tests-changed
+    if: needs.check-tests-changed.outputs.tests_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run tests
+        run: echo "✅ Running tests in tests/ folder..."
