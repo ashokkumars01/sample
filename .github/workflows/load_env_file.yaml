@@ -1,0 +1,27 @@
+name: Load .env File
+
+on: push
+
+jobs:
+  load-env-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Load .env and export variables
+        id: load_env
+        run: |
+          set -a  # Export all variables loaded from file
+          source .env
+          set +a
+          echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
+          echo "ENVIRONMENT=$ENVIRONMENT" >> $GITHUB_ENV
+          echo "API_URL=$API_URL" >> $GITHUB_ENV
+
+      - name: Use variables from .env
+        run: |
+          echo "App Name: $APP_NAME"
+          echo "Environment: $ENVIRONMENT"
+          echo "API URL: $API_URL"
