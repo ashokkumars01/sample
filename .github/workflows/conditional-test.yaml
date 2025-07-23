@@ -11,7 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build the app 
+      - name: Build the app
         run: echo "Build step always runs"
 
   check-tests-changes:
@@ -19,7 +19,7 @@ jobs:
     outputs:
       tests_changes: ${{steps.set-output.outputs.tests_changes}}
     steps:
-      - name: Checkout Code 
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Check for changes in tests/ folder
