@@ -2,19 +2,31 @@ name: Hello World Workflow
 
 on: push  # Trigger when code is pushed
 
+env:
+  GLOBAL_MESSAGE: "This is a global environment variable"
+  PROJECT_NAME: "GitHub Actions Demo"
+
 jobs:
   say-hello:
     runs-on: ubuntu-latest  # Define the runner (Linux VM)
+
+    env:
+      JOB_LEVEL_VAR: "I am set only at the job level"
 
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4  # Reusable GitHub Action
 
-      - name: Print a greeting
-        run: echo "👋 Hello, ${{ github.actor }}! This is your first GitHub Action."
+      - name: Print global and job-level variables
+        run: |
+          echo "Global Message: $GLOBAL_MESSAGE"
+          echo "Project Name: $PROJECT_NAME"
+          echo "Job Variable: $JOB_LEVEL_VAR"
 
-      - name: Show current directory
-        run: pwd
+      - name: Set environment variable dynamically
+        run: |
+          echo "DYNAMIC_VAR=I was set during runtime" >> $GITHUB_ENV
 
-      - name: List files in the repo
-        run: ls -la
+      - name: Use dynamic environment variable
+        run: |
+          echo "Dynamic Var: $DYNAMIC_VAR"
