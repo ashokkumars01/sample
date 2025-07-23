@@ -1,7 +1,6 @@
 name: Caller Workflow
 
-on: 
-  Workflow_dispatch
+on: Workflow_dispatch
 
 jobs:
   call-reusable:
