@@ -1,0 +1,20 @@
+name: Hello World Workflow
+
+on: push  # Trigger when code is pushed
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest  # Define the runner (Linux VM)
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4  # Reusable GitHub Action
+
+      - name: Print a greeting
+        run: echo "👋 Hello, ${{ github.actor }}! This is your first GitHub Action."
+
+      - name: Show current directory
+        run: pwd
+
+      - name: List files in the repo
+        run: ls -la
