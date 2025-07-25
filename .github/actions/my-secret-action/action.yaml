@@ -1,17 +1,17 @@
-name: My secret composite action
+name: My Secret Composite Action
 description: Logs and safely uses a secret
 
 inputs:
   api_token:
     required: true
-    description: API token secret 
+    description: API token secret
 
-runs: 
+runs:
   using: "composite"
   steps:
-    - name: Mask the secret 
-      run: echo "::add-mask::${{inputs.api_token}}"
+    - name: 🛡️ Mask the secret
+      run: echo "::add-mask::${{ inputs.api_token }}"
 
-    - name: Use the secret (simulated)
+    - name: 🔒 Use the secret (simulated)
       shell: bash
-      run: ./script.sh "${{inputs.api_token}}"
+      run: ./script.sh "${{ inputs.api_token }}"
