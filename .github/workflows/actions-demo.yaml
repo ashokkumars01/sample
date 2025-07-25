@@ -8,15 +8,14 @@ jobs:
   run-python:
     runs-on: ubuntu-latest
 
-
     steps:
       - name: checkout Repo Code
         uses: actions/checkout@v4
 
-      - name: Setup Python 
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Run Python Script
         run: Python hello.py
