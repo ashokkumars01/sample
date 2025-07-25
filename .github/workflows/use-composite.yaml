@@ -1,0 +1,17 @@
+name: Use composite Action with secret 
+
+on:
+  workflow_dispatch:
+
+jobs: 
+  demo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Call Custom Composite Action 
+        uses: ./.github/actions/my-secret-action
+        with:
+          api_token: ${{secrets.SECRET_TOKEN}}
